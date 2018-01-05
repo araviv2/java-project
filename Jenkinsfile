@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label 'master'
+  }
 
   environment {
     MAJOR_VERSION = 1
@@ -13,6 +15,12 @@ pipeline {
     stage('build') {
       steps {
         sh 'ant -f build.xml -v'
+      }
+    }
+
+    stage('deploy') {
+      steps {
+        sh 'cp dist/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar' /var/www/html/rectangles/all
       }
     }
 
