@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-    label 'master'
-  }
+  agent none
 
   environment {
     MAJOR_VERSION = 1
@@ -12,6 +10,9 @@ pipeline {
   }
 
   stages {
+    agent {
+      label 'slave3'
+    }
     stage('build') {
       steps {
         sh 'ant -f build.xml -v'
@@ -24,12 +25,18 @@ pipeline {
     }
 
     stage('deploy') {
+      agent {
+        label 'slave3'
+      }
       steps {
         sh "cp dist/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all"
       }
     }
 
     stage('unit test') {
+      agent {
+        label 'slave3'
+      }
       steps {
         sh 'ant -f test.xml -v'
         junit 'reports/result.xml'
