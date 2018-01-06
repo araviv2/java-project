@@ -41,7 +41,7 @@ pipeline {
         docker 'openjdk:8u121-jre'
       }
       steps {
-        sh "Ran on Debian"
+        sh "echo Ran on Debian"
       }
     }
   }
