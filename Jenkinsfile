@@ -16,6 +16,11 @@ pipeline {
       steps {
         sh 'ant -f build.xml -v'
       }
+      post {
+        always {
+          archiveArtifacts artifacts: 'dist/*.jar', fingerprint: true
+        }
+      }
     }
 
     stage('deploy') {
@@ -30,11 +35,16 @@ pipeline {
         junit 'reports/result.xml'
       }
     }
-  }
 
-  post {
-    always {
-      archiveArtifacts artifacts: 'dist/*.jar', fingerprint: true
+    stage("Running on Debian") {
+      agent {
+        docker 'openjdk:8u121-jre'
+      }
+      steps {
+        sh "Ran on Debian"
+      }
     }
   }
+
+
 }
