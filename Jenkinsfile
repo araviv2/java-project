@@ -10,10 +10,10 @@ pipeline {
   }
 
   stages {
-    agent {
-      label 'slave3'
-    }
     stage('build') {
+      agent {
+        label 'slave3'
+      }
       steps {
         sh 'ant -f build.xml -v'
       }
