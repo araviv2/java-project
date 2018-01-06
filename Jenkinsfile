@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage('build') {
       agent {
-        label 'slave3'
+        label 'worker1'
       }
       steps {
         sh 'ant -f build.xml -v'
@@ -26,7 +26,7 @@ pipeline {
 
     stage('deploy') {
       agent {
-        label 'slave3'
+        label 'worker1'
       }
       steps {
         sh "cp dist/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all"
@@ -35,7 +35,7 @@ pipeline {
 
     stage('unit test') {
       agent {
-        label 'slave3'
+        label 'worker1'
       }
       steps {
         sh 'ant -f test.xml -v'
