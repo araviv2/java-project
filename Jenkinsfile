@@ -29,7 +29,7 @@ pipeline {
         label 'worker1'
       }
       steps {
-        sh "if ![ -d '/var/www/html/rectangles/all/${env.BRANCH_NAME}' ]; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}; fi"
+        sh "if [ ! -d '/var/www/html/rectangles/all/${env.BRANCH_NAME}' ]; then mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}; fi"
         sh "cp dist/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
     }
@@ -81,6 +81,7 @@ pipeline {
         sh 'git stash'
         echo "Checking out Development Branch"
         sh 'git checkout development'
+        sh 'git pull'
         echo "Checking out Master Branch"
         sh 'git checkout master'
         echo "Merging Development into Master Branch"
