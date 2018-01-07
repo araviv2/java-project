@@ -34,6 +34,14 @@ pipeline {
       }
     }
 
+    stage('Say Hello') {
+      agent any
+
+      steps {
+        sayHello 'Awesome Student!'
+      }
+    }
+
     stage('unit test') {
       agent {
         label 'worker1'
